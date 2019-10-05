@@ -7,7 +7,7 @@ import Header from './components/common/Header'
 import Footer from './components/common/Footer'
 import TravelForm from './components/Forms/TravelForm'
 import CurrentLocation from './components/GoogleMap/CurrentLocation'
-
+import SearchResult from './components/SearchResult';
 function App() {
   return (
     <Provider store={store}>
@@ -17,7 +17,8 @@ function App() {
 
           <Switch>
             <Route exact path="/" component={TravelForm} />
-            <Route exact path="/map" component={CurrentLocation} />
+            {/* <Route exact path="/map" component={CurrentLocation} /> */}
+            {/* <Route exact path='/search' component={SearchResult} /> */}
           </Switch>
 
           <Footer />

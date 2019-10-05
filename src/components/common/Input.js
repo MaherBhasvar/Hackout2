@@ -12,7 +12,7 @@ const Input = (props) => {
                 onChange={props.onChange}
                 className="form-control"
                 aria-describedby="emailHelp"
-                placeholder={props.placeholder} />
+                placeholder={props.placeholder} /> {props.radioMessage}
             <small id="emailHelp" className="form-text text-muted"> {props.message}</small>
             <small id="emailHelp" className="form-text text-muted"> {props.error}</small>
         </div>
