@@ -5,7 +5,7 @@ import {
 } from './types';
 
 const axios = Axios.create({
-    baseURL: 'https://www.googleapis.com/geolocation/v1/geolocate?key=YOUR_API_KEY',
+    baseURL: 'https://www.googleapis.com/geolocation/v1/geolocate?key=AIzaSyB1U9ZSkPklUAWt7WTQQT9E_T1qLfWGHSQ',
     timeout: 1000,
     headers: {
         // 'X-Custom-Header': 'foobar',
@@ -14,5 +14,16 @@ const axios = Axios.create({
         // ['Access-Control-Allow-Origin']: '*',
     }
 });
+
+export const getLocation = (data) => dispatch => {
+    axios.post('/', data)
+        .then(res => {
+            console.log(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+}
 
 

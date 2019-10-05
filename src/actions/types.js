@@ -1,3 +1,4 @@
 export const SET_CURRENT_USER = 'SET_CURRENT_USER'
 export const SHOW_JOURNEY = 'SHOW_JOURNEY'
 export const GET_ERRORS = 'GET_ERRORS'
+export const CURRENT_LOCATION = 'CURRENT_LOCATION'
