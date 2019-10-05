@@ -26,7 +26,7 @@ class CurrentLocation extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyD2XqNbavNzcx1ydE6eKWxNaoch_erFAB4'
+    apiKey: 'AIzaSyCfVJ5BempzSWsifnLXpNHwTAqh3lXL-oA'
 })(CurrentLocation);
 
 //export default CurrentLocation;
