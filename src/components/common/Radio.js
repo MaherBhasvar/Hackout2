@@ -3,9 +3,9 @@ import React from 'react'
 const Radio = (props) => {
 
     return (
-        <div className="RadioInput form-group row">
+        <div className="RadioInput btn btn-outline-primary form-group col-3 ">
             {/* <label for="exampleInputEmail1">{props.label}</label> */}
-            <div className="col-1">
+            <div className="col">
                 <input
                     type={props.type}
                     name={props.name}
@@ -15,7 +15,7 @@ const Radio = (props) => {
                     aria-describedby="emailHelp"
                     placeholder={props.placeholder} />
             </div>
-            <div className="col-11">
+            <div className="col">
                 {props.radioMessage}
                 <small id="emailHelp" className="form-text text-muted"> {props.message}</small>
                 <small id="emailHelp" className="form-text text-muted"> {props.error}</small>

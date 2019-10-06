@@ -9,6 +9,7 @@ import TravelForm from './components/Forms/TravelForm'
 import CurrentLocation from './components/GoogleMap/CurrentLocation'
 import SearchResult from './components/SearchResult';
 import GetLocation from './components/GoogleMap/GetLocation';
+import ShowResult from './components/Result/ShowResult';
 function App() {
   return (
     <Provider store={store}>
@@ -19,7 +20,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={TravelForm} />
             <Route exact path="/location" component={GetLocation} />
-            {/* <Route exact path="/map" component={CurrentLocation} /> */}
+            <Route exact path="/result" component={ShowResult} />
+            <Route exact path="/map" component={CurrentLocation} />
             {/* <Route exact path='/search' component={SearchResult} /> */}
           </Switch>
 

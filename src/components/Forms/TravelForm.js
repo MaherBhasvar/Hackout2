@@ -3,8 +3,10 @@ import Input from '../common/Input'
 import Radio from '../common/Radio'
 //import PrimaryMode from './PrimaryMode'
 import { Modal, Button } from 'react-bootstrap'
-import { submitData } from '../../actions/submitActions'
+import { submitData, saveData, getLocation, sendLocations } from '../../actions/submitActions'
 import { connect, } from 'react-redux'
+import { withRouter } from 'react-router-dom'
+import CurrentLocation from '../GoogleMap/CurrentLocation'
 
 
 class TravelForm extends Component {
@@ -17,6 +19,7 @@ class TravelForm extends Component {
         passengers: '',
         primaryMode: '',
         showPrimaryMode: false,
+
     }
     handleClose = (e) => {
         //e.preventDefautl()
@@ -29,7 +32,13 @@ class TravelForm extends Component {
         // console.log(this.state);
         const data = { "entry": "Bangalore", "dest": "Gandhinagar", "date": "20191007", "seats": "2", "latEn": "12.9716", "lonEn": "77.5946", "latDes": "23.2156", "lonDes": "72.6369" }
         console.log(data)
-        this.props.submitData(data)
+        this.props.submitData(data, this.props.history)
+        this.props.saveData(data)
+
+        this.props.history.push('/result')
+        this.setState({
+            showPrimaryMode: false
+        })
     }
 
     onChangeValue = (e) => {
@@ -45,12 +54,22 @@ class TravelForm extends Component {
         e.preventDefault();
 
         const data = {
-            ...this.state
+            city: this.state.start,
+
+        }
+
+        const data2 = {
+            entry: this.state.start,
+            dest: this.state.end
         }
 
         this.setState({
             showPrimaryMode: true
         })
+
+        // this.props.getLocation(data)
+
+        this.props.sendLocations(data2)
 
         console.log(data);
     }
@@ -67,23 +86,27 @@ class TravelForm extends Component {
         })
     }
 
-    showPosition = (position) => {
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        console.log(lat, lng)
-        //map.setCenter(new google.maps.LatLng(lat, lng));
-        this.setState({
-            lat: lat,
-            lng: lng
-        })
-    }
-    getLocation = () => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => this.showPosition(position));
-        } else {
-            alert("Geolocation is not supported by this browser.");
-        }
-    }
+    // showPosition = (position) => {
+    //     var lat = position.coords.latitude;
+    //     var lng = position.coords.longitude;
+    //     console.log(lat, lng)
+    //     //map.setCenter(new google.maps.LatLng(lat, lng));
+    //     this.setState({
+    //         lat: lat,
+    //         lng: lng
+    //     })
+    // }
+    // getLocation = () => {
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition((position) => this.showPosition(position));
+    //     } else {
+    //         alert("Geolocation is not supported by this browser.");
+    //     }
+    // }
+
+
+
+
 
     render() {
         return (
@@ -92,15 +115,15 @@ class TravelForm extends Component {
                 {this.getLocation}
                 <Modal show={this.state.showPrimaryMode} onHide={e => this.handleClose(e)}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Select Primary Mode</Modal.Title>
+                        <Modal.Title>Select Preferable Mode</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Radio
                             label="Primary Mode"
                             type="radio"
                             name="primaryMode"
-                            value="Train"
-                            radioMessage="Train"
+                            value="Bus"
+                            radioMessage="Bus"
                             onChange={e => this.onChangeValue(e)}
                         />
                         <Radio
@@ -115,8 +138,8 @@ class TravelForm extends Component {
                             label=""
                             type="radio"
                             name="primaryMode"
-                            value="Bus"
-                            radioMessage="Bus"
+                            value="Both"
+                            radioMessage="Both"
                             onChange={e => this.onChangeValue(e)}
                         />
                     </Modal.Body>
@@ -179,6 +202,7 @@ class TravelForm extends Component {
                     </div>
                     <div class="col-6">
                         2 of 3 (wider)
+                        <CurrentLocation startLng={this.props.submit.startLng} startLat={this.props.submit.startLat} />
                     </div>
 
                 </div>
@@ -197,4 +221,4 @@ const mapStateToProps = state => ({
     submit: state.submit
 });
 
-export default connect(mapStateToProps, { submitData })(TravelForm);
+export default connect(mapStateToProps, { submitData, saveData, getLocation, sendLocations })(withRouter(TravelForm));

@@ -1,7 +1,11 @@
-import { SHOW_JOURNEY } from '../actions/types'
+import { SHOW_JOURNEY, SAVE_DATA, START_LOCATION } from '../actions/types'
 
 const initialState = {
-    newData: null
+    newData: null,
+    saveData: null,
+    startLat: null,
+    startLng: null,
+    end: null
 }
 
 export default function (state = initialState, action) {
@@ -10,6 +14,18 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 newData: action.payload,
+            }
+        case SAVE_DATA:
+            return {
+                ...state,
+                saveData: action.payload
+            }
+        case START_LOCATION:
+            console.log("lat,long", action.payload)
+            return {
+                ...state,
+                startLat: parseFloat(action.payload.geometry.lat),
+                startLng: parseFloat(action.payload.geometry.lon),
             }
         default:
             return state

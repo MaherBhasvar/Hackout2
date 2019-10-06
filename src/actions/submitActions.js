@@ -2,13 +2,15 @@ import Axios from 'axios';
 import {
     SHOW_JOURNEY,
     GET_ERRORS,
+    SAVE_DATA,
+    START_LOCATION,
 } from './types';
 
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 
 const axios = Axios.create({
-    baseURL: 'http://127.0.0.1:54545/',
-    timeout: 1000,
+    baseURL: 'http://localhost:54545/',
+    timeout: 200000,
     headers: {
         // 'X-Custom-Header': 'foobar',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -17,7 +19,40 @@ const axios = Axios.create({
     }
 });
 
-export const submitData = (data) => dispatch => {
+
+export const sendLocations = data => dispatch => {
+    axios.post('/locate', data)
+        .then(res => {
+            console.log("send locations", res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+export const getLocation = data => dispatch => {
+    axios.post('/locate1', data)
+        .then(res => {
+            console.log("lat,long", res.data)
+            dispatch({
+                type: START_LOCATION,
+                payload: res.data
+            })
+        })
+        .catch(err => {
+            console.log(err)
+        })
+}
+
+
+export const saveData = (data) => dispatch => {
+    dispatch({
+        type: SAVE_DATA,
+        payload: data
+    })
+}
+
+export const submitData = (data, history) => dispatch => {
 
     // axios.get('/')
     //     .then(res => {
@@ -41,6 +76,8 @@ export const submitData = (data) => dispatch => {
                 type: SHOW_JOURNEY,
                 payload: res.data,
             })
+
+            history.push('/result')
         })
         .catch(err => {
             dispatch({
