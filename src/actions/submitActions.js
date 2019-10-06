@@ -10,7 +10,7 @@ import {
 
 const axios = Axios.create({
     baseURL: 'http://localhost:54545/',
-    timeout: 200000,
+    timeout: 2000000,
     headers: {
         // 'X-Custom-Header': 'foobar',
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -21,6 +21,7 @@ const axios = Axios.create({
 
 
 export const sendLocations = data => dispatch => {
+
     axios.post('/locate', data)
         .then(res => {
             console.log("send locations", res.data)
@@ -69,22 +70,59 @@ export const submitData = (data, history) => dispatch => {
     //             payload: err.response.data
     //         })
     //     })
-    axios.post('/flight', data)
-        .then(res => {
-            console.log("actions", res.data)
-            dispatch({
-                type: SHOW_JOURNEY,
-                payload: res.data,
-            })
+    if (data.primaryMode == "Bus") {
+        axios.post('/bus', data)
+            .then(res => {
+                console.log("actions", res.data)
+                dispatch({
+                    type: SHOW_JOURNEY,
+                    payload: res.data,
+                })
 
-            history.push('/result')
-        })
-        .catch(err => {
-            dispatch({
-                type: GET_ERRORS,
-                //payload: err.response.data
+                history.push('/result')
             })
-        })
+            .catch(err => {
+                dispatch({
+                    type: GET_ERRORS,
+                    //payload: err.response.data
+                })
+            })
+    } else if (data.primaryMode == "Flight") {
+        axios.post('/flight', data)
+            .then(res => {
+                console.log("actions", res.data)
+                dispatch({
+                    type: SHOW_JOURNEY,
+                    payload: res.data,
+                })
+
+                history.push('/result')
+            })
+            .catch(err => {
+                dispatch({
+                    type: GET_ERRORS,
+                    //payload: err.response.data
+                })
+            })
+    } else {
+        axios.post('/flight', data)
+            .then(res => {
+                console.log("actions", res.data)
+                dispatch({
+                    type: SHOW_JOURNEY,
+                    payload: res.data,
+                })
+
+                history.push('/result')
+            })
+            .catch(err => {
+                dispatch({
+                    type: GET_ERRORS,
+                    //payload: err.response.data
+                })
+            })
+    }
+
 
 }
 

@@ -19,8 +19,19 @@ class TravelForm extends Component {
         passengers: '',
         primaryMode: '',
         showPrimaryMode: false,
-
+        startLat: 28.6466773,
+        startLng: 76.813073,
     }
+
+
+    onBlur = (e) => {
+        console.log(e.target.name)
+        const data = {
+            city: this.state[e.target.name],
+        }
+        this.props.getLocation(data)
+    }
+
     handleClose = (e) => {
         //e.preventDefautl()
         this.setState({
@@ -30,7 +41,13 @@ class TravelForm extends Component {
 
     handleSave = (e) => {
         // console.log(this.state);
-        const data = { "entry": "Bangalore", "dest": "Gandhinagar", "date": "20191007", "seats": "2", "latEn": "12.9716", "lonEn": "77.5946", "latDes": "23.2156", "lonDes": "72.6369" }
+        var data = {}
+        if (this.state.primaryMode == "Bus") {
+            data = { "entry": this.state.start, "dest": this.state.end, "date": "07-10-2019", "seats": this.state.passengers, "primaryMode": this.state.primaryMode }
+        } else {
+            data = { "entry": this.state.start, "dest": this.state.end, "date": "20191007", "seats": this.state.passengers, "primaryMode": this.state.primaryMode }
+        }
+
         console.log(data)
         this.props.submitData(data, this.props.history)
         this.props.saveData(data)
@@ -48,6 +65,23 @@ class TravelForm extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+
+        if (e.target.name === "passengers") {
+            const data = {
+                city: this.state.start,
+            }
+            this.props.getLocation(data)
+
+            const data2 = {
+                city: this.state.end
+            }
+
+            setTimeout(() => { this.props.getLocation(data2) }, 10000)
+        }
+
+        // if ((this.state.startLat == '' || this.state.startLat == null) && this.state.start != '') {
+
+        // }
     }
 
     onSubmit = (e) => {
@@ -79,7 +113,7 @@ class TravelForm extends Component {
         this.setState({
             name: 'Maher Bhavsar',
             start: 'Gandhinagar',
-            end: 'Bengaluru',
+            end: 'Bangalore',
             date: '2019-10-06',
             emailId: 'maher.daiict@gmail.com',
             passengers: '1'
@@ -170,13 +204,18 @@ class TravelForm extends Component {
                                 type="text"
                                 name="start"
                                 value={this.state.start}
-                                onChange={e => this.onChangeValue(e)} />
+                                onChange={e => this.onChangeValue(e)}
+                                onBlur={e => this.onBlur(e)}
+                            />
                             <Input
                                 label="End Point"
                                 type="text"
                                 name="end"
                                 value={this.state.end}
-                                onChange={e => this.onChangeValue(e)} />
+                                onChange={e => this.onChangeValue(e)}
+                                onBlur={e => this.onBlur(e)}
+                            />
+
                             <Input
                                 label="Date of Journey"
                                 type="date"
@@ -202,6 +241,7 @@ class TravelForm extends Component {
                     </div>
                     <div class="col-6">
                         2 of 3 (wider)
+                        {console.log(this.props.submit.startLng)}
                         <CurrentLocation startLng={this.props.submit.startLng} startLat={this.props.submit.startLat} />
                     </div>
 

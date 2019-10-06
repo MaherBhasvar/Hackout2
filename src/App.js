@@ -10,6 +10,7 @@ import CurrentLocation from './components/GoogleMap/CurrentLocation'
 import SearchResult from './components/SearchResult';
 import GetLocation from './components/GoogleMap/GetLocation';
 import ShowResult from './components/Result/ShowResult';
+import SuccessBooking from './components/Result/SuccessBooking';
 function App() {
   return (
     <Provider store={store}>
@@ -22,10 +23,11 @@ function App() {
             <Route exact path="/location" component={GetLocation} />
             <Route exact path="/result" component={ShowResult} />
             <Route exact path="/map" component={CurrentLocation} />
+            <Route exact path="/success" component={SuccessBooking} />
             {/* <Route exact path='/search' component={SearchResult} /> */}
           </Switch>
 
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Router>
     </Provider>

@@ -28,6 +28,10 @@ class CurrentLocation extends Component {
     //     }
     // }
 
+    state = {
+        lat: this.props.startLat,
+        lng: this.props.startLng
+    }
 
 
     render() {
@@ -42,7 +46,8 @@ class CurrentLocation extends Component {
                     google={this.props.google}
                     zoom={8}
                     style={mapStyles}
-                    initialCenter={{ lat: (this.props.startLat), lng: (this.props.startLng) }}
+                    initialCenter={{ lng: 76.813073, lat: 28.6466773 }}
+                    center={{ lat: this.props.startLat, lng: this.props.startLng }}
                 >
                     <Marker position={{ lat: (this.props.startLat), lng: (this.props.startLng) }} />
                 </Map>
