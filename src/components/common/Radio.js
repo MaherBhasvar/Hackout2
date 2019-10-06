@@ -3,7 +3,7 @@ import React from 'react'
 const Radio = (props) => {
 
     return (
-        <div className="RadioInput btn btn-outline-primary form-group col-3 ">
+        <div className="RadioInput btn btn-outline-primary form-group container col-4 ">
             {/* <label for="exampleInputEmail1">{props.label}</label> */}
             <div className="col">
                 <input

@@ -4,6 +4,7 @@ import {
     GET_ERRORS,
     SAVE_DATA,
     START_LOCATION,
+    CLEAR_REDUCERS
 } from './types';
 
 //axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -19,6 +20,12 @@ const axios = Axios.create({
     }
 });
 
+
+export const clearReducers = () => dispatch => {
+    dispatch({
+        type: CLEAR_REDUCERS,
+    })
+}
 
 export const sendLocations = data => dispatch => {
 

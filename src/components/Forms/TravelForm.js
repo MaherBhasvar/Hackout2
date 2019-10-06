@@ -3,7 +3,7 @@ import Input from '../common/Input'
 import Radio from '../common/Radio'
 //import PrimaryMode from './PrimaryMode'
 import { Modal, Button } from 'react-bootstrap'
-import { submitData, saveData, getLocation, sendLocations } from '../../actions/submitActions'
+import { submitData, saveData, sendLocations } from '../../actions/submitActions'
 import { connect, } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import CurrentLocation from '../GoogleMap/CurrentLocation'
@@ -29,7 +29,7 @@ class TravelForm extends Component {
         const data = {
             city: this.state[e.target.name],
         }
-        this.props.getLocation(data)
+        //this.props.getLocation(data)
     }
 
     handleClose = (e) => {
@@ -70,13 +70,13 @@ class TravelForm extends Component {
             const data = {
                 city: this.state.start,
             }
-            this.props.getLocation(data)
+            //this.props.getLocation(data)
 
             const data2 = {
                 city: this.state.end
             }
 
-            setTimeout(() => { this.props.getLocation(data2) }, 10000)
+            //setTimeout(() => { this.props.getLocation(data2) }, 10000)
         }
 
         // if ((this.state.startLat == '' || this.state.startLat == null) && this.state.start != '') {
@@ -146,42 +146,47 @@ class TravelForm extends Component {
         return (
 
             <div className="TravelForm container">
-                {this.getLocation}
+
                 <Modal show={this.state.showPrimaryMode} onHide={e => this.handleClose(e)}>
                     <Modal.Header closeButton>
                         <Modal.Title>Select Preferable Mode</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <Radio
-                            label="Primary Mode"
-                            type="radio"
-                            name="primaryMode"
-                            value="Bus"
-                            radioMessage="Bus"
-                            onChange={e => this.onChangeValue(e)}
-                        />
-                        <Radio
-                            label=""
-                            type="radio"
-                            name="primaryMode"
-                            value="Flight"
-                            radioMessage="Flight"
-                            onChange={e => this.onChangeValue(e)}
-                        />
-                        <Radio
+                        <div className="container" >
+                            <div className=" col-12" >
+                                <Radio
+                                    label="Primary Mode"
+                                    type="radio"
+                                    name="primaryMode"
+                                    value="Bus"
+                                    radioMessage="Bus"
+                                    onChange={e => this.onChangeValue(e)}
+                                /></div>
+                            <div className=" col-12" >
+                                <Radio
+                                    label=""
+                                    type="radio"
+                                    name="primaryMode"
+                                    value="Flight"
+                                    radioMessage="Flight"
+                                    onChange={e => this.onChangeValue(e)}
+                                />
+                            </div>
+                        </div>
+                        {/* <Radio
                             label=""
                             type="radio"
                             name="primaryMode"
                             value="Both"
                             radioMessage="Both"
                             onChange={e => this.onChangeValue(e)}
-                        />
+                        /> */}
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={e => this.handleClose(e)}>
+                        <Button variant="danger" onClick={e => this.handleClose(e)} >
                             Close
                         </Button>
-                        <Button variant="secondary" onClick={e => this.handleSave(e)}>
+                        <Button variant="primary" onClick={e => this.handleSave(e)} disabled={this.state.primaryMode == ''}>
                             Save
                         </Button>
                     </Modal.Footer>
@@ -191,7 +196,7 @@ class TravelForm extends Component {
                 </button>
                 <div class="row">
                     <div class="col-4">
-                        1 of 3
+
                         <form >
                             {/* <Input
                         label="Name"
@@ -235,12 +240,13 @@ class TravelForm extends Component {
                                 value={this.state.passengers}
                                 onChange={e => this.onChangeValue(e)} />
                             <button
+                                disabled={this.state.start == '' || this.state.end == '' || this.state.date == '' || this.state.passengers == ''}
                                 className="btn btn-primary"
                                 onClick={e => this.onSubmit(e)}> Submit </button>
                         </form>
                     </div>
                     <div class="col-6">
-                        2 of 3 (wider)
+
                         {console.log(this.props.submit.startLng)}
                         <CurrentLocation startLng={this.props.submit.startLng} startLat={this.props.submit.startLat} />
                     </div>
@@ -261,4 +267,4 @@ const mapStateToProps = state => ({
     submit: state.submit
 });
 
-export default connect(mapStateToProps, { submitData, saveData, getLocation, sendLocations })(withRouter(TravelForm));
+export default connect(mapStateToProps, { submitData, saveData, sendLocations })(withRouter(TravelForm));

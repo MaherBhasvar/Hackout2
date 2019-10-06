@@ -44,12 +44,12 @@ class CurrentLocation extends Component {
             <div className="GoogleMaps">
                 <Map
                     google={this.props.google}
-                    zoom={8}
+                    zoom={4}
                     style={mapStyles}
                     initialCenter={{ lng: 76.813073, lat: 28.6466773 }}
-                    center={{ lat: this.props.startLat, lng: this.props.startLng }}
+                //center={{ lat: this.props.startLat, lng: this.props.startLng }}
                 >
-                    <Marker position={{ lat: (this.props.startLat), lng: (this.props.startLng) }} />
+                    {/* <Marker position={{ lat: (this.props.startLat), lng: (this.props.startLng) }} /> */}
                 </Map>
             </div>
         );

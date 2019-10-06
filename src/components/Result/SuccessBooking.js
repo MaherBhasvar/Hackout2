@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import { clearReducers } from '../../actions/submitActions'
+import { connect } from 'react-redux'
 
 
 class SuccessBooking extends Component {
@@ -13,10 +15,16 @@ class SuccessBooking extends Component {
             <div className="container">
                 <h1>Your Booking is Successful</h1>
                 <h4>Thank You For Choosing Us</h4>
-                <Link to="/">Book Another Ticket</Link>
+                <Link to="/" onClick={(e) => { this.props.clearReducers() }}>Book Another Ticket</Link>
             </div>
         )
     }
 }
 
-export default withRouter(SuccessBooking)
+const mapStateToProps = state => ({
+    auth: state.auth,
+    errors: state.errors,
+    submit: state.submit
+})
+
+export default connect(mapStateToProps, { clearReducers })(withRouter(SuccessBooking))

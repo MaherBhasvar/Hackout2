@@ -4,3 +4,4 @@ export const GET_ERRORS = 'GET_ERRORS'
 export const CURRENT_LOCATION = 'CURRENT_LOCATION'
 export const SAVE_DATA = 'SAVE_DATA'
 export const START_LOCATION = "START_LOCATION"
+export const CLEAR_REDUCERS = "CLEAR_REDUCERS"

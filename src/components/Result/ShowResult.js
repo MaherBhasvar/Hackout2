@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom'
 import Spinner from '../common/Spinner'
 import { Link } from 'react-router-dom'
 
+import { clearReducers } from '../../actions/submitActions'
+
 
 class ShowResult extends Component {
     // state = {
@@ -95,9 +97,9 @@ class ShowResult extends Component {
 
         showData = (<div> <h4>Time Effective</h4>
             {wholeArray.map((pack, index) => {
-                if (pack === 4 || pack == 3 || pack === 2 || pack == 1) {
+                if (pack === 4 || pack === 3 || pack === 2 || pack === 1) {
                     return null
-                } else if (pack.Type === "Time Effective") {
+                } else if (pack.Type == "Time Effective") {
                     return (
                         <div class="card" key="index">
                             <div class="card-header row">
@@ -120,14 +122,14 @@ class ShowResult extends Component {
                                             <ul>
                                                 {this.props.submit.saveData.primaryMode === "Bus" ? (
                                                     < span> Bus Details:
-                                                    {pack['Bus Details'].map((each, index) => (
+                                                    {pack != null && pack['Bus Details'] != null ? pack['Bus Details'].map((each, index) => (
                                                         <li key={index}> {details[index]} : {each}</li>
-                                                    ))} </ span>
+                                                    )) : (<span>No Details Found</span>)} </ span>
                                                 ) : (
                                                         <span> Flight Details:
-                                                    {pack['Flight Details'].map((each, index) => (
+                                                    {pack != null && pack['Flight Details'] != null ? pack['Flight Details'].map((each, index) => (
                                                             <li key={index}> {details[index]} : {each}</li>
-                                                        ))} </span>
+                                                        )) : (<span>No Details Found</span>)} </span>
                                                     )}
 
 
@@ -180,14 +182,14 @@ class ShowResult extends Component {
                                             <ul>
                                                 {this.props.submit.saveData.primaryMode === "Bus" ? (
                                                     < span> Bus Details:
-                                                    {pack['Bus Details'].map((each, index) => (
+                                                    {pack != null && pack['Bus Details'] != null ? pack['Bus Details'].map((each, index) => (
                                                         <li key={index}> {details[index]} : {each}</li>
-                                                    ))} </ span>
+                                                    )) : <span> No Detailss Found</span>} </ span>
                                                 ) : (
                                                         <span> Flight Details:
-                                                    {pack['Flight Details'].map((each, index) => (
+                                                    {pack != null && pack['Flight Details'] != null ? pack['Flight Details'].map((each, index) => (
                                                             <li key={index}> {details[index]} : {each}</li>
-                                                        ))} </span>
+                                                        )) : <span> No Detailss Found</span>} </span>
                                                     )}
 
 
@@ -221,7 +223,7 @@ class ShowResult extends Component {
                 <h1>
                     Result here
                 </h1>
-                <Link to='/'><button className="btn btn-primary" onClick={(e) => e.preventDefault()}>Home</button></Link>
+                <Link to='/'><button className="btn btn-primary" onClick={(e) => { e.preventDefault(); this.props.clearReducers() }}>Home</button></Link>
                 {showData}
                 {showData2}
             </div>
@@ -235,4 +237,4 @@ const mapStateToProps = state => ({
     submit: state.submit
 })
 
-export default connect(mapStateToProps, {})(withRouter(ShowResult))
+export default connect(mapStateToProps, { clearReducers })(withRouter(ShowResult))
